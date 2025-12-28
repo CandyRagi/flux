@@ -42,18 +42,15 @@ const styles = StyleSheet.create({
   defaultSemiBold: {
     fontSize: 16,
     lineHeight: 24,
-    fontWeight: '600',
     fontFamily: 'Valorant',
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
     lineHeight: 32,
     fontFamily: 'Valorant',
   },
   subtitle: {
     fontSize: 20,
-    fontWeight: 'bold',
     fontFamily: 'Valorant',
   },
   link: {

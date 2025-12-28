@@ -46,6 +46,22 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="profile" options={{
+          title: 'Profile',
+          headerTitleStyle: {
+            fontFamily: 'Valorant',
+          },
+          headerTransparent: true,
+          headerStyle: {
+            backgroundColor: 'transparent',
+          },
+        }} />
+        <Stack.Screen name="notifications" options={{
+          title: 'Notifications',
+          headerTitleStyle: {
+            fontFamily: 'Valorant',
+          }
+        }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
       </Stack>
       <StatusBar style="auto" />

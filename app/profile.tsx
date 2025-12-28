@@ -84,7 +84,7 @@ export default function ProfileScreen() {
         }
 
         const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            mediaTypes: ['images'],
             allowsEditing: true,
             aspect: [1, 1],
             quality: 0.8,
@@ -109,15 +109,29 @@ export default function ProfileScreen() {
             formData.append('upload_preset', process.env.EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET || '');
 
             const cloudName = process.env.EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+            console.log('Uploading to Cloudinary:', cloudName);
+            console.log('Upload preset:', process.env.EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
+
             const response = await fetch(
                 `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
                 {
                     method: 'POST',
                     body: formData,
+                    headers: {
+                        'Accept': 'application/json',
+                    },
                 }
             );
 
             const data = await response.json();
+            console.log('Cloudinary response:', data);
+
+            if (!response.ok) {
+                console.error('Cloudinary error:', data);
+                throw new Error(data.error?.message || 'Upload failed');
+            }
+
             if (data.secure_url) {
                 // Update Firestore
                 await setDoc(doc(db, 'users', user.uid), {
@@ -131,10 +145,15 @@ export default function ProfileScreen() {
 
                 setProfile({ ...profile, photoURL: data.secure_url });
                 Alert.alert('Success', 'Profile picture updated!');
+            } else {
+                throw new Error('No image URL returned from Cloudinary');
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Upload error:', error);
-            Alert.alert('Upload failed', 'Could not upload profile picture. Please try again.');
+            Alert.alert(
+                'Upload failed',
+                error.message || 'Could not upload profile picture. Please check your Cloudinary settings and try again.'
+            );
         } finally {
             setUploading(false);
         }

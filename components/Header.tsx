@@ -9,7 +9,7 @@ import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { doc, onSnapshot } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export function Header() {
@@ -44,7 +44,7 @@ export function Header() {
         <ThemedView style={[styles.container, { paddingTop: insets.top }]}>
             <View style={styles.topRow}>
                 <View>
-                    <ThemedText style={styles.greeting}>Hi, {profileData.displayName}</ThemedText>
+                    <ThemedText style={styles.greeting}>Dashboard</ThemedText>
                 </View>
                 <View style={styles.rightIcons}>
                     <TouchableOpacity onPress={() => router.push('/notifications')} style={styles.iconButton}>
@@ -60,6 +60,14 @@ export function Header() {
                         />
                     </TouchableOpacity>
                 </View>
+            </View>
+            <View style={[styles.searchContainer, { backgroundColor: theme.background === '#000' ? '#1A1A1A' : '#F0F0F0' }]}>
+                <Ionicons name="search" size={20} color={theme.icon} style={styles.searchIcon} />
+                <TextInput
+                    placeholder="Search..."
+                    placeholderTextColor="#888"
+                    style={[styles.searchInput, { color: theme.text }]}
+                />
             </View>
         </ThemedView>
     );
@@ -78,9 +86,10 @@ const styles = StyleSheet.create({
         height: 60,
     },
     greeting: {
-        fontSize: 28,
+        fontSize: 25,
         fontFamily: 'Valorant',
         lineHeight: 32,
+        marginTop: 7,
     },
     rightIcons: {
         flexDirection: 'row',
@@ -108,5 +117,21 @@ const styles = StyleSheet.create({
         backgroundColor: '#2A2E35',
         borderWidth: 2,
         borderColor: '#64D2FF',
+    },
+    searchContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 12,
+        paddingHorizontal: 12,
+        height: 44,
+        marginTop: 10,
+    },
+    searchIcon: {
+        marginRight: 8,
+    },
+    searchInput: {
+        flex: 1,
+        fontSize: 16,
+        fontFamily: 'Valorant',
     },
 });

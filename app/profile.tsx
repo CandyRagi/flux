@@ -521,6 +521,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
+        fontFamily: 'Valorant',
     },
     aboutContent: {
         marginTop: 12,
@@ -528,6 +529,7 @@ const styles = StyleSheet.create({
     aboutText: {
         lineHeight: 22,
         opacity: 0.8,
+        fontFamily: 'Valorant',
     },
     signOutButton: {
         flexDirection: 'row',
@@ -543,5 +545,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 18,
         fontWeight: 'bold',
+        fontFamily: 'Valorant',
     },
 });

@@ -58,7 +58,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
                         >
                             {label.toString().toUpperCase()}
                         </Text>
-                        {isFocused && <View style={[styles.indicator, { backgroundColor: theme.tint }]} />}
+                        {isFocused && <View style={styles.indicator} />}
                     </TouchableOpacity>
                 );
             })}
@@ -81,16 +81,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         height: '100%',
+        position: 'relative',
     },
     label: {
         fontFamily: 'Valorant',
-        fontSize: 24,
-        marginBottom: 4,
+        fontSize: 16,
     },
     indicator: {
+        position: 'absolute',
+        bottom: 16,
         width: 40,
-        height: 4,
+        height: 3,
         borderRadius: 2,
-        marginTop: 4,
+        backgroundColor: '#64D2FF',
     },
 });

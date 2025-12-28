@@ -1,7 +1,10 @@
 import { Colors } from '@/constants/theme';
+import { auth, db } from '@/firebaseConfig';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Ionicons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 import { usePathname } from 'expo-router';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Animated, {
@@ -10,6 +13,7 @@ import Animated, {
     useSharedValue,
     withTiming
 } from 'react-native-reanimated';
+import { AddEntityModal } from './AddEntityModal';
 
 const FAB_SIZE = 60;
 const ITEM_SIZE = 50;
@@ -17,6 +21,9 @@ const RADIUS = 100;
 
 export function RadialMenu() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [modalType, setModalType] = useState<'site' | 'store'>('site');
+
     const animation = useSharedValue(0);
     const pathname = usePathname();
     const colorScheme = useColorScheme();
@@ -33,6 +40,39 @@ export function RadialMenu() {
             duration: 200,
         });
         setIsOpen(!isOpen);
+    };
+
+    const handleAddPress = () => {
+        setModalType(isSites ? 'site' : 'store');
+        toggleMenu(); // Close menu
+        setTimeout(() => {
+            setIsModalVisible(true);
+        }, 250); // Wait for animation to finish
+    };
+
+    const handleCreateEntity = async (name: string, location: string, imageUri: string | null) => {
+        const user = auth.currentUser;
+        if (!user) {
+            console.error('No user logged in');
+            return;
+        }
+
+        const collectionName = modalType === 'site' ? 'sites' : 'stores';
+
+        try {
+            await addDoc(collection(db, collectionName), {
+                name,
+                location,
+                imageUrl: imageUri, // In a real app, upload to storage first and get URL
+                adminId: user.uid,
+                members: [user.uid],
+                createdAt: serverTimestamp(),
+            });
+            console.log(`Created new ${modalType}: ${name}`);
+        } catch (error) {
+            console.error(`Error creating ${modalType}:`, error);
+            throw error;
+        }
     };
 
     const rotationStyle = useAnimatedStyle(() => {
@@ -68,11 +108,13 @@ export function RadialMenu() {
     return (
         <View style={styles.container} pointerEvents="box-none">
             {isOpen && (
-                <TouchableOpacity
-                    style={styles.overlay}
-                    activeOpacity={1}
-                    onPress={toggleMenu}
-                />
+                <BlurView intensity={60} style={styles.overlay} tint={colorScheme === 'dark' ? 'dark' : 'light'}>
+                    <TouchableOpacity
+                        style={StyleSheet.absoluteFill}
+                        activeOpacity={1}
+                        onPress={toggleMenu}
+                    />
+                </BlurView>
             )}
             <View style={styles.menuWrapper} pointerEvents="box-none">
                 {/* Analytics - Left (180 degrees) */}
@@ -82,7 +124,7 @@ export function RadialMenu() {
                 <MenuItem icon="chatbubble-ellipses" angle={225} />
 
                 {/* Add Site/Store - Top (270 degrees) */}
-                <MenuItem icon={addIcon} angle={270} />
+                <MenuItem icon={addIcon} angle={270} onPress={handleAddPress} />
 
                 <TouchableOpacity
                     activeOpacity={0.8}
@@ -94,6 +136,15 @@ export function RadialMenu() {
                     </Animated.View>
                 </TouchableOpacity>
             </View>
+
+            {isModalVisible && (
+                <AddEntityModal
+                    visible={isModalVisible}
+                    onClose={() => setIsModalVisible(false)}
+                    type={modalType}
+                    onSubmit={handleCreateEntity}
+                />
+            )}
         </View>
     );
 }
@@ -109,7 +160,7 @@ const styles = StyleSheet.create({
     },
     menuWrapper: {
         position: 'absolute',
-        bottom: 100, // Adjusted to be above tab bar
+        bottom: 100,
         right: 20,
         alignItems: 'center',
         justifyContent: 'center',

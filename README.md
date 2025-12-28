@@ -1,51 +1,67 @@
-# Welcome to your Expo app 👋
+# Flux
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Flux is a comprehensive mobile application designed for efficient site and store management. Built with performance and user experience in mind, it leverages modern technologies to provide real-time data synchronization and a fluid, interactive interface.
 
-## Get started
+## Key Features
 
-1. Install dependencies
+- **Site & Store Management**: Seamlessly organize and track multiple sites and stores.
+- **Interactive Radial Menu**: A custom-built, animated Floating Action Button (FAB) for quick access to core actions like adding sites, viewing analytics, and accessing the chatbot.
+- **Real-Time Updates**: Powered by Firebase for instant data synchronization across devices.
+- **Adaptive Theming**: Fully supports both light and dark modes for a comfortable viewing experience in any environment.
+- **Secure Authentication**: Robust user authentication system.
 
-   ```bash
-   npm install
-   ```
+## Technology Stack
 
-2. Start the app
+- **Framework**: [React Native](https://reactnative.dev/) with [Expo](https://expo.dev/)
+- **Language**: TypeScript
+- **Styling**: Custom theming system
+- **Animations**: [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)
+- **Backend**: [Firebase](https://firebase.google.com/) (Firestore, Auth)
+- **Navigation**: [Expo Router](https://docs.expo.dev/router/introduction/)
 
-   ```bash
-   npx expo start
-   ```
+## Getting Started
 
-In the output, you'll find options to open the app in a
+To run this project locally, follow these steps:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/your-org/flux.git
+    cd flux
+    ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-## Get a fresh project
+3.  **Configure Environment**
+    - Ensure you have a valid `google-services.json` for Android and `GoogleService-Info.plist` for iOS if building native binaries.
+    - Configure your Firebase credentials in `firebaseConfig.ts` if necessary.
 
-When you're ready, run:
+4.  **Run the application**
+    ```bash
+    npx expo start
+    ```
 
-```bash
-npm run reset-project
-```
+## Project Structure
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- `app/`: Contains the main application screens and navigation logic (Expo Router).
+- `components/`: Reusable UI components (Header, RadialMenu, etc.).
+- `constants/`: App-wide constants and theme definitions.
+- `context/`: React Context providers (Authentication, etc.).
+- `hooks/`: Custom React hooks.
+- `assets/`: Static assets like images and fonts.
 
-## Learn more
+## Contributing
 
-To learn more about developing your project with Expo, look at the following resources:
+We welcome contributions to improve Flux. Please follow these steps:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+1.  Fork the repository.
+2.  Create a new branch (`git checkout -b feature/YourFeature`).
+3.  Commit your changes (`git commit -m 'Add some feature'`).
+4.  Push to the branch (`git push origin feature/YourFeature`).
+5.  Open a Pull Request.
 
-## Join the community
+## License
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-# flux
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import 'react-native-get-random-values';
 import 'react-native-reanimated';
 
+import { ThemedText } from '@/components/themed-text';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
@@ -48,9 +49,16 @@ function RootLayoutNav() {
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="profile" options={{
           title: 'Profile',
-          headerTitleStyle: {
-            fontFamily: 'Valorant',
-          },
+          headerTitle: (props) => (
+            <ThemedText style={{
+              fontFamily: 'Valorant',
+              fontSize: 24,
+              marginTop: 6,
+              color: props.tintColor
+            }}>
+              Profile
+            </ThemedText>
+          ),
           headerTransparent: true,
           headerStyle: {
             backgroundColor: 'transparent',

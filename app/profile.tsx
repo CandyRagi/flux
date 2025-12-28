@@ -14,6 +14,7 @@ import {
     Alert,
     Image,
     KeyboardAvoidingView,
+    Linking,
     Modal,
     Platform,
     ScrollView,
@@ -501,10 +502,10 @@ export default function ProfileScreen() {
                                 </View>
                             </ScrollView>
 
-                            {/* Close Button */}
+                            {/* Website Button */}
                             <TouchableOpacity
                                 style={styles.saveButton}
-                                onPress={() => setShowAboutModal(false)}
+                                onPress={() => Linking.openURL('https://google.com')}
                             >
                                 <LinearGradient
                                     colors={['#64D2FF', '#4A9FD8']}
@@ -512,7 +513,8 @@ export default function ProfileScreen() {
                                     end={{ x: 1, y: 0 }}
                                     style={styles.gradientButton}
                                 >
-                                    <ThemedText style={styles.buttonText}>Close</ThemedText>
+                                    <Ionicons name="globe-outline" size={20} color="#fff" />
+                                    <ThemedText style={styles.buttonText}>Visit Website</ThemedText>
                                 </LinearGradient>
                             </TouchableOpacity>
                         </View>
@@ -530,8 +532,8 @@ const styles = StyleSheet.create({
     },
     headerGradient: {
         paddingTop: 110,
-        paddingBottom: 40,
-        marginBottom: 20,
+        paddingBottom: 0,
+        marginBottom: 0,
     },
     header: {
         alignItems: 'center',

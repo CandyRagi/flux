@@ -42,6 +42,17 @@ function RootLayoutNav() {
     return null; // Or a loading spinner
   }
 
+  const renderHeaderTitle = (props: { children: string; tintColor?: string }) => (
+    <ThemedText style={{
+      fontFamily: 'Valorant',
+      fontSize: 24,
+      marginTop: 6,
+      color: props.tintColor
+    }}>
+      {props.children}
+    </ThemedText>
+  );
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
@@ -49,16 +60,7 @@ function RootLayoutNav() {
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="profile" options={{
           title: 'Profile',
-          headerTitle: (props) => (
-            <ThemedText style={{
-              fontFamily: 'Valorant',
-              fontSize: 24,
-              marginTop: 6,
-              color: props.tintColor
-            }}>
-              Profile
-            </ThemedText>
-          ),
+          headerTitle: renderHeaderTitle,
           headerTransparent: true,
           headerStyle: {
             backgroundColor: 'transparent',
@@ -66,9 +68,11 @@ function RootLayoutNav() {
         }} />
         <Stack.Screen name="notifications" options={{
           title: 'Notifications',
-          headerTitleStyle: {
-            fontFamily: 'Valorant',
-          }
+          headerTitle: renderHeaderTitle,
+          headerTransparent: true,
+          headerStyle: {
+            backgroundColor: 'transparent',
+          },
         }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
       </Stack>
